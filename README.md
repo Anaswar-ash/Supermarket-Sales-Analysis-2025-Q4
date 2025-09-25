@@ -1,4 +1,5 @@
 End-to-End Supermarket Sales Analysis
+Author: Ash.
 1. Project Overview
 This project provides a comprehensive analysis of the "Supermarket Sales" dataset sourced from Kaggle. The primary goal is to transform raw transactional data into actionable business insights that can guide strategic decisions for revenue growth. From a data analyst's perspective, this project demonstrates the complete workflow: from secure data acquisition and cleaning to exploratory analysis, visualization, and final recommendations.
 
