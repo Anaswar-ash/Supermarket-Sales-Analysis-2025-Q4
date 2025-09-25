@@ -72,7 +72,6 @@ def run_sales_analysis():
         print("Successfully loaded records into a pandas DataFrame.")
         
         # FIX: Clean the column names to remove the prefix and special characters.
-        # This is the key change to solve the KeyError.
         clean_columns = [col.split('/')[-1].replace('+', '_').replace('%25', '_percent') for col in df.columns]
         df.columns = clean_columns
         # Also, decode byte strings to regular strings for object columns
@@ -133,17 +132,21 @@ def run_sales_analysis():
     print("Saved 'large_quantity_sales.csv' for transactions with quantity >= 5.")
 
     # --- 6. Visualization & Insights ---
-    print("\nStep 6: Generating visualizations...")
+    print("\nStep 6: Generating and saving visualizations...")
     
     # Plot 1: Total Revenue by Product Line
     plt.figure(figsize=(12, 7))
-    sns.barplot(x=product_line_analysis.index, y=product_line_analysis['total_revenue'], palette='viridis')
+    # Fix for FutureWarning: Assign x to hue and set legend to False
+    sns.barplot(x=product_line_analysis.index, y=product_line_analysis['total_revenue'], hue=product_line_analysis.index, palette='viridis', legend=False)
     plt.title('Total Revenue by Product Line', fontsize=16)
     plt.xlabel('Product Line', fontsize=12)
     plt.ylabel('Total Revenue', fontsize=12)
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    plt.show()
+    # Save the plot to a file instead of showing it
+    plt.savefig('revenue_by_product_line.png')
+    plt.close() # Close the plot to free up memory
+    print("Saved 'revenue_by_product_line.png'.")
 
     # Plot 2: Revenue Over Time
     # Convert 'Date' column to datetime objects, handling potential errors
@@ -157,7 +160,10 @@ def run_sales_analysis():
     plt.ylabel('Total Revenue', fontsize=12)
     plt.grid(True)
     plt.tight_layout()
-    plt.show()
+    # Save the plot to a file
+    plt.savefig('daily_revenue_over_time.png')
+    plt.close() # Close the plot
+    print("Saved 'daily_revenue_over_time.png'.")
 
     # --- 7. Conclusions ---
     print("\nStep 7: Conclusions and Recommendations...")
