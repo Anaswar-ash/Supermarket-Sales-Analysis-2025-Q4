@@ -1,60 +1,117 @@
-# Supermarket-Sales-Analysis-2025-Q4
-Supermarket Sales Analysis with Kaggle dataset
-Author: Ash.
-Supermarket Sales Analysis Project
+End-to-End Supermarket Sales Analysis
 1. Project Overview
-This project conducts a comprehensive analysis of a supermarket's sales data to uncover trends, identify top-performing product categories, and provide actionable insights for business growth. The primary goal is to answer key business questions such as:
+This project provides a comprehensive analysis of the "Supermarket Sales" dataset sourced from Kaggle. The primary goal is to transform raw transactional data into actionable business insights that can guide strategic decisions for revenue growth. From a data analyst's perspective, this project demonstrates the complete workflow: from secure data acquisition and cleaning to exploratory analysis, visualization, and final recommendations.
 
-Which product lines generate the most revenue?
+The analysis answers critical business questions, such as:
 
-What are the sales trends over time?
+What are the top-performing product categories by revenue and sales volume?
 
-How do different customer segments or store branches perform?
+What are the daily sales trends over time?
 
-This analysis helps management make data-driven decisions regarding inventory, marketing strategies, and resource allocation.
+How do different product lines compare in terms of average price and total revenue?
 
-2. How to Run
-Step 2.1: Prerequisites
-Python 3.7+
+2. Dataset Information
+This project uses the Supermarket Sales Dataset, which captures detailed transaction records from a supermarket chain in Myanmar across three cities: Yangon, Naypyitaw, and Mandalay. It provides a comprehensive view of sales activities, customer demographics, and payment methods from January to March 2019.
 
-A Kaggle Account
+Source: Kaggle Dataset Link
 
-Install the required Python libraries using pip:
+Format: CSV
 
-pip install pandas matplotlib seaborn kagglehub
+Number of Records: 1000
 
-Step 2.2: IMPORTANT - Kaggle Authentication
-Before running the script, you must authenticate your machine with your Kaggle account.
+Number of Columns: 17
 
-Log in to Kaggle: Go to www.kaggle.com.
+Column Descriptions
+Invoice ID: A unique identifier for each transaction.
 
-Go to Your Account Settings: Click on your profile picture in the top-right corner and select "Account".
+Branch & City: Location of the supermarket.
 
-Create New API Token: Scroll down to the "API" section and click the "Create New API Token" button. This will download a file named kaggle.json.
+Customer Type: 'Member' or 'Normal' customer.
 
-Place the Token:
+Gender: Gender of the customer.
 
-Windows: Move the kaggle.json file to C:\Users\<Your-Username>\.kaggle\. You may need to create the .kaggle folder if it doesn't exist.
+Product Line: The category of the product sold.
 
-Mac/Linux: Move the file to ~/.kaggle/.
+Unit Price & Quantity: Price per unit and number of items purchased.
 
-The script will not work without this file in the correct location.
+Total: Total transaction amount including a 5% tax.
 
-Step 2.3: Execution
-Once you have installed the libraries and configured your Kaggle token, run the analysis from your terminal:
+Date & Time: Date and time of the transaction.
+
+Payment: Payment method used (Cash, Ewallet, Credit card).
+
+cogs: Cost of goods sold.
+
+gross income: Profit from each transaction.
+
+Rating: Customer satisfaction rating (out of 10).
+
+3. Technologies & Libraries Used
+Python 3.x
+
+Pandas: For data manipulation and analysis.
+
+Matplotlib & Seaborn: For data visualization.
+
+mlcroissant: For programmatically loading the dataset metadata.
+
+KaggleHub: For authenticating with and downloading data from Kaggle.
+
+4. Setup and Installation
+Follow these steps to set up the project environment on your local machine.
+
+Step 4.1: Prerequisites
+Ensure you have Python 3.8 or newer installed.
+
+You will need a Kaggle account and an API token.
+
+Step 4.2: Clone the Repository
+git clone <your-repository-url>
+cd <your-repository-directory>
+
+Step 4.3: Set Up Kaggle API Authentication
+For the script to download the dataset, you need to authenticate with Kaggle. The most reliable method is to use a kaggle.json API token file.
+
+Go to your Kaggle account settings page (https://www.kaggle.com/<your-username>/account).
+
+Click on "Create New API Token". This will download a kaggle.json file.
+
+Place this file in the correct directory:
+
+Windows: C:\Users\<Your-Username>\.kaggle\
+
+macOS / Linux: ~/.kaggle/
+
+The script will automatically detect this file and use it for authentication.
+
+Step 4.4: Install Dependencies
+Install all the required Python libraries using the requirements.txt file.
+
+pip install -r requirements.txt
+
+5. How to Run the Analysis
+Once the setup is complete, you can run the analysis by executing the main Python script from your terminal:
 
 python Supermarket_Analysis.py
 
-The script will now download the data automatically, print the analysis results, save two new CSV files, and display two charts.
+The script will run from start to finish, printing the analysis steps to the console and generating output files in the project directory.
 
-3. Summary of Findings
-Top Revenue Categories: The "Food and beverages" and "Sports and travel" product lines are the highest contributors to total revenue.
+6. Output Files
+The script will generate four new files in your project folder:
 
-Sales Volume vs. Revenue: "Electronic accessories" sell in high quantities but generate lower total revenue, suggesting a lower average price per item.
+important_sales.csv: A simplified CSV containing only the most essential columns (Invoice_ID, Date, Product_line, Total).
 
-Sales Trend: There is a noticeable fluctuation in daily revenue, with peaks and troughs that could correspond to specific days of the week or promotional events.
+large_quantity_sales.csv: A filtered CSV containing only transactions where 5 or more items were purchased.
 
-4. Dataset Details
-Source Handle: faresashraf1001/supermarket-sales
+revenue_by_product_line.png: A bar chart visualizing the total revenue generated by each product line.
 
-Columns: 17 (Invoice ID, Branch, City, Customer Type, etc.)
+daily_revenue_over_time.png: A line chart showing the trend of total revenue on a daily basis.
+
+7. Summary of Findings
+The analysis reveals several key business insights:
+
+Top Categories: 'Food and beverages' and 'Sports and travel' are the highest revenue-generating categories. These should be a primary focus for marketing efforts and inventory management.
+
+Volume vs. Revenue: While 'Electronic accessories' sell in high quantities, their overall contribution to revenue is lower. This suggests a potential strategy to upsell or bundle higher-margin products in this category.
+
+Sales Fluctuations: Daily revenue data shows significant peaks and troughs. Further analysis could correlate these fluctuations with specific days of the week, holidays, or marketing promotions to optimize staffing and campaigns.
