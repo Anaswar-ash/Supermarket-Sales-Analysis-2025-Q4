@@ -60,9 +60,9 @@ def run_sales_analysis():
         # Fetch the Croissant JSON-LD
         croissant_dataset = mlc.Dataset('https://www.kaggle.com/datasets/faresashraf1001/supermarket-sales/croissant/download')
 
-        # Get the name of the first record set (usually the main data table)
-        record_set_name = croissant_dataset.metadata.record_sets[0].name
-        print(f"Found record set: '{record_set_name}'")
+        # Use the record set name exactly as suggested by the error message.
+        record_set_name = 'SuperMarket+Analysis.csv'
+        print(f"Attempting to load record set: '{record_set_name}'")
 
         # Fetch the records as an iterator
         records = croissant_dataset.records(record_set=record_set_name)
@@ -71,8 +71,17 @@ def run_sales_analysis():
         df = pd.DataFrame(records)
         print("Successfully loaded records into a pandas DataFrame.")
         
-        # Rename columns to be more Python-friendly (e.g., remove spaces)
-        df.columns = df.columns.str.replace(' ', '_').str.replace('-', '_')
+        # FIX: Clean the column names to remove the prefix and special characters.
+        # This is the key change to solve the KeyError.
+        clean_columns = [col.split('/')[-1].replace('+', '_').replace('%25', '_percent') for col in df.columns]
+        df.columns = clean_columns
+        # Also, decode byte strings to regular strings for object columns
+        for col in df.select_dtypes(include=['object']).columns:
+            df[col] = df[col].str.decode('utf-8')
+        
+        # Rename original 'Sales' column to 'Total' for consistency with original script logic
+        if 'Sales' in df.columns:
+            df.rename(columns={'Sales': 'Total'}, inplace=True)
 
         print("\nFirst 5 rows of the dataset:")
         print(df.head())
@@ -93,7 +102,7 @@ def run_sales_analysis():
     # Business Question: How many "Health and beauty" transactions had a total price over $100?
     high_value_hb_transactions = 0
     for index, row in df.iterrows():
-        if row['Product_line'] == 'Health and beauty' and row['Total'] > 100:
+        if 'Product_line' in df.columns and row['Product_line'] == 'Health and beauty' and row['Total'] > 100:
             high_value_hb_transactions += 1
     
     print(f"Number of 'Health and beauty' transactions with total > $100: {high_value_hb_transactions}")
